@@ -2,6 +2,7 @@ import QtQuick 2.0
 import Ubuntu.Components 0.1
 import Ubuntu.Components.ListItems 0.1 as ListItem
 import QtQuick.XmlListModel 2.0
+import QtWebKit 3.0
 /*!
     \brief MainView with a Label and Button elements.
 */
@@ -64,7 +65,7 @@ MainView {
                     progression:true
                     onClicked: {
                         articleView.title = title
-                        articleContent.text = description
+                        articleContent.url = link
                         articleContent.visible = true
                         pageStack.push(articleView)
                     }
@@ -75,27 +76,14 @@ MainView {
         Page {
             id: articleView
             title: 'Article'
-            Row {
-                id:buttonbar
-                Button {
-                    id: backbutton
-                    text: 'back'
-                    onClicked: {
-                        pageStack.push(articleList)
-                    }
-                }
-            }
 
-            Row {
-                anchors.top: buttonbar.bottom
-                anchors.bottom: parent.bottom
-                anchors.left: parent.left
-                anchors.right: parent.right
-                TextArea {
-                    anchors.fill: parent
-                    id: 'articleContent'
-                    text: "Hello, world!"
-                }
+            WebView {
+                id: articleContent
+                anchors.fill:parent
+                url: ""
+                scale:1
+                visible: false
+
             }
 
         }
